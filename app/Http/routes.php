@@ -18,3 +18,5 @@ Route::get('/', function () {
 Route::auth();
 
 Route::get('/home', 'HomeController@index');
+Route::get('/{username}', ['as' => 'my_profile', 'uses' => 'UserController@profile']);
+Route::get('/{$username}/{$project_name}', 'UserController@project');
