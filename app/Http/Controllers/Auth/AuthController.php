@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use Validator;
+use Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
@@ -28,10 +29,10 @@ class AuthController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('guest', ['except' => 'getLogout']);
-    }
+     public function __construct()
+     {
+         $this->middleware($this->guestMiddleware(), ['except' => 'getLogout']);
+     }
 
     /**
      * Get a validator for an incoming registration request.
@@ -42,7 +43,7 @@ class AuthController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|max:255',
+            'name' => 'required|max:255|unique:users',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|confirmed|min:6',
         ]);
@@ -62,4 +63,10 @@ class AuthController extends Controller
             'password' => bcrypt($data['password']),
         ]);
     }
+    // public function getLogout()
+    // {
+    //     $this->auth->logout();
+    //     Session::flush();
+    //     return redirect('/');
+    // }
 }

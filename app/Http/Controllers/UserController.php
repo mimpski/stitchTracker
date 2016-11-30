@@ -9,15 +9,17 @@ use Request;
 use Auth;
 use App\Project;
 use App\User;
+use Redirect;
 
 class UserController extends Controller
 {
 
     public function profile($username){
-      $id = Auth::user()->id;
-      $user = User::where('name', $username)->get();
-      $project = Project::where('owner',$id)->get();
-      return view('users.profile', compact('user', 'project'));
+      $profileid = DB::table('users')->select('id')->where('name', '=', $username)->first();
+      $userid = get_object_vars($profileid);
+      $profile = User::where('name', $username)->get();
+      $project = Project::where('owner', $userid)->get();
+      return view('users.profile', compact('profile', 'project'));
     }
 
     public function create_project(){
@@ -36,9 +38,10 @@ class UserController extends Controller
         $Project->start_date = $input['start_date'];
         $Project->slug = $input['slug'];
         $Project->save();
-      //  $id = $Project->id;
-        $project = Project::where('id', $id)->get();
-        return view('projects.view', compact('project'));
+        $id = Auth::user()->id;
+        $username = Auth::user()->name;
+        $project = Project::where('owner',$id)->get();
+        return Redirect::route('my_profile', $username)->with($username);
     }
 
     public function view_project($username,$project_name){

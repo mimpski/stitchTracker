@@ -16,6 +16,8 @@ Route::get('/', function () {
 });
 
 Route::auth();
+Route::get('/logout', 'Auth\AuthController@getLogout');
+
 
 Route::get('/home', 'HomeController@index');
 Route::get('/{username}', ['as' => 'my_profile', 'uses' => 'UserController@profile']);

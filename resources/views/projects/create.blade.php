@@ -14,12 +14,18 @@
                       {!! Form::hidden('owner', $id) !!}
 
                       <div class="form-group">
-                        {!! Form::text('name', 'Name your project', ['class' => 'form-control']) !!}
+                        {!! Form::text('name', 'Name your project', ['class' => 'form-control', 'id' => 'name', 'onkeyup' => 'sync()']) !!}
                       </div>
+                      <script>
+                        function sync(textbox){
+                          var n1 = document.getElementById('name').value.replace(/\s+/g, '-').toLowerCase();
+                          document.getElementById('slug').value = n1;
+                        }
+                      </script>
                       <div class="form-group">
-                        {!! Form::text('slug', 'Slug your project', ['class' => 'form-control']) !!}
+                        {!! Form::hidden('slug', '', ['class' => 'form-control', 'id' => 'slug']) !!}
                       </div>
-                      
+
                       <div class="form-group">
                         {!! Form::text('source', 'Pattern source', ['class' => 'form-control']) !!}
                       </div>
