@@ -22,6 +22,16 @@ class UserController extends Controller
         return view('users.profile', compact('profile', 'project'));
     }
 
+    public function dashboard($username){
+        $profileid = DB::table('users')->select('id')->where('name', '=', $username)->first();
+        $userid = get_object_vars($profileid);
+        // Get followers projects
+        $feed = DB::select( DB::raw("select f.follow_id, p.* from projects p, followers f where f.user_id = $userid[id] and p.owner = f.follow_id;") ); // Need to limit and order this by eventually
+        $feed = collect($feed);
+        $project = Project::where('owner', $userid)->get();
+        return view('users.dashboard', compact('project', 'feed'));
+    }
+
     public function create_project(){
         $id = Auth::user()->id;
         return view('projects.create', compact('id'));

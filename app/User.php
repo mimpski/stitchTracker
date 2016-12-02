@@ -36,4 +36,25 @@ class User extends Model implements AuthenticatableContract,
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
+
+    // This function allows us to get a list of users following us
+    public function followers(){
+        return $this->belongsToMany('User', 'followers', 'follow_id', 'user_id')->withTimestamps();
+    }
+
+    // Get all users we are following
+    public function following(){
+        return $this->belongsToMany('User', 'followers', 'user_id', 'follow_id')->withTimestamps();
+    }
+
+    public function addFollowing(User $user){
+  		$this->following()->attach($user->id);
+  	}
+
+  	public function removeFollowing(User $user){
+  		$this->following()->detach($user->id);
+  	}
+
+    /// http://alexsears.com/tutorial/user-friendships-laravel/
+
 }

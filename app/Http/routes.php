@@ -21,6 +21,7 @@ Route::get('/logout', 'Auth\AuthController@getLogout');
 
 Route::get('/home', 'HomeController@index');
 Route::get('/{username}', ['as' => 'my_profile', 'uses' => 'UserController@profile']);
+Route::get('/{username}/dashboard', ['as' => 'my_dashboard', 'uses' => 'UserController@dashboard']);
 Route::get('/{username}/new-project', ['as' => 'create_project', 'uses' => 'UserController@create_project']);
 Route::post('/save-project', ['as' => 'save_project', 'uses' => 'UserController@save_project']);
 Route::get('/{username}/{project_name}', ['as' => 'view_project', 'uses' => 'UserController@view_project'])->middleware('auth');

@@ -64,6 +64,8 @@
 
                             <ul class="dropdown-menu" role="menu">
                               <li><a href="/{{ Auth::user()->name }}"><i class="fa fa-btn fa-user"></i>My Profile</a></li>
+                              <li><a href="/{{ Auth::user()->name }}/dashboard"><i class="fa fa-btn fa-tachometer"></i>Dashboard</a></li>
+
                                 <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
                             </ul>
                         </li>
