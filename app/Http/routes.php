@@ -23,4 +23,6 @@ Route::get('/home', 'HomeController@index');
 Route::get('/{username}', ['as' => 'my_profile', 'uses' => 'UserController@profile']);
 Route::get('/{username}/new-project', ['as' => 'create_project', 'uses' => 'UserController@create_project']);
 Route::post('/save-project', ['as' => 'save_project', 'uses' => 'UserController@save_project']);
-Route::get('/{username}/{project_name}', ['as' => 'view_project', 'uses' => 'UserController@view_project']);
+Route::get('/{username}/{project_name}', ['as' => 'view_project', 'uses' => 'UserController@view_project'])->middleware('auth');
+Route::get('/{username}/{project_name}/edit', ['as' => 'edit_project', 'uses' => 'UserController@edit_project']);
+Route::post('/update', ['as' => 'update_project', 'uses' => 'UserController@update_project']);

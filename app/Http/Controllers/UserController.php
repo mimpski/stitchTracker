@@ -15,11 +15,11 @@ class UserController extends Controller
 {
 
     public function profile($username){
-      $profileid = DB::table('users')->select('id')->where('name', '=', $username)->first();
-      $userid = get_object_vars($profileid);
-      $profile = User::where('name', $username)->get();
-      $project = Project::where('owner', $userid)->get();
-      return view('users.profile', compact('profile', 'project'));
+        $profileid = DB::table('users')->select('id')->where('name', '=', $username)->first();
+        $userid = get_object_vars($profileid);
+        $profile = User::where('name', $username)->get();
+        $project = Project::where('owner', $userid)->get();
+        return view('users.profile', compact('profile', 'project'));
     }
 
     public function create_project(){
@@ -41,6 +41,31 @@ class UserController extends Controller
         $id = Auth::user()->id;
         $username = Auth::user()->name;
         $project = Project::where('owner',$id)->get();
+        return Redirect::route('my_profile', $username)->with($username);
+    }
+
+    public function edit_project($username,$project_name){
+        $currentUser = Auth::user()->name;
+        if($username != $currentUser){
+          echo ('You do not have permission to edit this project!');
+        }
+        else{
+          $id = Auth::user()->id;
+          $user = DB::table('users')->select('id')->where('name', '=', $username)->first();
+          $userid = get_object_vars($user);
+          $project = Project::where('slug', $project_name)->where('owner', '=', $userid)->get();
+          return view('projects.edit', compact('id', 'project'));
+        }
+    }
+
+    public function update_project(Request $request){
+        $input = Request::all();
+        $id = Request::get('id');
+        $Project = Project::where('id',$id)->first();
+        $Project->source = $input['source'];
+        $Project->status = $input['status'];
+        $Project->save();
+        $username = Auth::user()->name;
         return Redirect::route('my_profile', $username)->with($username);
     }
 

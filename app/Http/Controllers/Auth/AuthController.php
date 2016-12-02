@@ -29,10 +29,10 @@ class AuthController extends Controller
      *
      * @return void
      */
-     public function __construct()
-     {
-         $this->middleware($this->guestMiddleware(), ['except' => 'getLogout']);
-     }
+    public function __construct()
+    {
+        $this->middleware($this->guestMiddleware(), ['except' => 'getLogout']);
+    }
 
     /**
      * Get a validator for an incoming registration request.
@@ -63,10 +63,4 @@ class AuthController extends Controller
             'password' => bcrypt($data['password']),
         ]);
     }
-    // public function getLogout()
-    // {
-    //     $this->auth->logout();
-    //     Session::flush();
-    //     return redirect('/');
-    // }
 }
