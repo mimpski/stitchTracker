@@ -46,14 +46,14 @@ class User extends Model implements AuthenticatableContract,
     public function following(){
         return $this->belongsToMany('User', 'followers', 'user_id', 'follow_id')->withTimestamps();
     }
-
-    public function addFollowing(User $user){
-  		$this->following()->attach($user->id);
-  	}
-
-  	public function removeFollowing(User $user){
-  		$this->following()->detach($user->id);
-  	}
+    // 
+    // public function addFollowing(User $user){
+  	// 	$this->following()->attach($user->id);
+  	// }
+    //
+  	// public function removeFollowing(User $user){
+  	// 	$this->following()->detach($user->id);
+  	// }
 
     /// http://alexsears.com/tutorial/user-friendships-laravel/
 

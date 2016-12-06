@@ -20,6 +20,9 @@ Route::get('/logout', 'Auth\AuthController@getLogout');
 
 
 Route::get('/home', 'HomeController@index');
+Route::get('/find-friends', 'UserController@find_friends');
+Route::get('/follow/{id}', 'UserController@add_following');
+Route::get('/unfollow/{id}', 'UserController@remove_following');
 Route::get('/{username}', ['as' => 'my_profile', 'uses' => 'UserController@profile']);
 Route::get('/{username}/dashboard', ['as' => 'my_dashboard', 'uses' => 'UserController@dashboard']);
 Route::get('/{username}/new-project', ['as' => 'create_project', 'uses' => 'UserController@create_project']);
