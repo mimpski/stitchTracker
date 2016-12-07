@@ -36,6 +36,7 @@
                         {!! Form::select('status', ['Just Started' => 'Just Started', 'In Progress' => 'In Progress', 'Finished' => 'Finished'], $project[0]['status']); !!}
                       </div>
 
+
                       <div class="form-group">
                         {!! Form::submit('Update project', ['class' => 'btn btn-primary']) !!}
                       </div>

@@ -18,4 +18,8 @@ class Project extends Model{
       'slug'
   ];
 
+  public function updates(){
+      return $this->hasMany('Update', 'updates', 'project_id', 'project_id')->withTimestamps();
+  }
+
 }
