@@ -13,5 +13,10 @@
          Add New Image
       </a>
   @endforeach
+  <br/><br/>
+  @foreach ($updates as $update)
+    <img src="/images/updates/{{$username}}/{{$project[0]['slug']}}/{{$update->filename}}" alt=""/>
+    {{$update->description}}<br/><br/>
+  @endforeach
 
 @endsection

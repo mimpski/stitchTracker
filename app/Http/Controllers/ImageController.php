@@ -30,11 +30,10 @@ class ImageController extends Controller {
              'description' => 'required',
              'filename' => 'required'
          ]);
-        //  $image->title = $request->title;
         $username = $request->username;
         $project_name = $request->project_name;
-         $image->description = $request->description;
-         $image->project_id = $request->id;
+        $image->description = $request->description;
+        $image->project_id = $request->id;
  		     if($request->hasFile('filename')) {
              $file = Input::file('filename');
              //getting timestamp
@@ -46,23 +45,8 @@ class ImageController extends Controller {
 
              $file->move(public_path().'/images/updates/'.$username.'/'.$project_name, $name);
          }
-         $image->save();
+        $image->save();
 
-
-
-         $user = DB::table('users')->select('id')->where('name' ,  '=' ,  $username)->first();
-         $userid = get_object_vars($user); // Turns the above stdClass into a string to use below
-
-         $project = Project::where('slug', $project_name)->where('owner', $userid)->get();
-         return view('projects.view', compact('user', 'project', 'username'));
+        return redirect()->action('ProjectController@view_project', ['username' => $username, 'project_name' => $project_name]);
  	}
-
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
-	public function show(){
-		// Show lists of the images
-    }
 }

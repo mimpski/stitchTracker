@@ -66,13 +66,19 @@ class ProjectController extends Controller
         $userid = get_object_vars($user); // Turns the above stdClass into a string to use below
         $username = $username;
         $project = Project::where('slug', $project_name)->where('owner', $userid)->get();
-        return view('projects.view', compact('user', 'project', 'username'));
+        $projectid = DB::table('projects')->select('id')->where('slug' ,  '=' ,  $project_name)->where('owner', '=', $userid)->first();
+        $projects = get_object_vars($projectid);
+        $projectid = implode($projects);
+        $updates = DB::select( DB::raw("select p.id, u.* from projects p, updates u where u.project_id = $projectid and p.id = u.project_id;") );
+        $updates = collect($updates);
+
+        return view('projects.view', compact('user', 'project', 'username', 'updates'));
     }
 
     public function add_update($username,$project_name){
         $id = Auth::user()->id;
         $user = DB::table('users')->select('id')->where('name' ,  '=' ,  $username)->first();
-        $userid = get_object_vars($user); // Turns the above stdClass into a string to use below
+        $userid = get_object_vars($user);
         $project = Project::where('slug', $project_name)->where('owner', $userid)->get();
         $username = $username;
         return view('projects.update', compact('user', 'project', 'id', 'username'));
